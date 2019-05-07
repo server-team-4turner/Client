@@ -19,7 +19,7 @@ public class Connection {
 			this.url = this.url + "/";
 	}
 
-	public Scanner call(String method, String args) throws IOException {
+	public Scanner call(String method, Object args) throws IOException {
 		return makeRequest(this.url + method + "/" + args);
 	}
 
