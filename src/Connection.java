@@ -13,14 +13,17 @@ public class Connection {
 
 		boolean http = this.url.substring(0, 7).equals("http://");
 		boolean https = this.url.substring(0, 8).equals("https://");
-		if (!http || !https)
+		if (!http && https)
 			this.url = "http://" + this.url;
-		if (this.url.charAt(this.url.length() - 1) != '/')
-			this.url = this.url + "/";
+		if (this.url.charAt(this.url.length() - 1) == '/')
+			this.url = this.url.substring(0, this.url.length() - 1);
 	}
 
-	public Scanner call(String method, Object args) throws IOException {
-		return makeRequest(this.url + method + "/" + args);
+	public Scanner call(Object... args) throws IOException {
+		String call = "";
+		for (Object i : args)
+			call += "/" + i;
+		return makeRequest(this.url + call);
 	}
 
 	public static Scanner makeRequest(String urlString) throws IOException {
